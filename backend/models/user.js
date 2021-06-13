@@ -21,7 +21,7 @@ userSchema.methods.generateToken = async function (){
     try {
         token = await jwt.sign(
             { _id:this._id },
-            'generatesecretecodeforthe@assessment@/app'
+            'generatesecretecodeforthe@event@/app'
         );
         return token
     } catch (error) {
@@ -29,7 +29,7 @@ userSchema.methods.generateToken = async function (){
     }
 }
 
-userSchema.statics.findByCredentials = async (email,password)=>{
+userSchema.statics.findByCresidentials = async (email,password)=>{
     const user = await User.findOne({email})
     if(!user){
         throw new Error('Unable to login')
