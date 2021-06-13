@@ -22,7 +22,7 @@ const Login:React.FC = () => {
     const submitHandler =async (values:any) => {
         setOpen(true)
         try {
-            const response = await axios.post('http://localhost:5000/user/login',{
+            const response = await axios["post"]('http://localhost:5000/user/login',{
                 ...values
             })
             const {data} = response.data

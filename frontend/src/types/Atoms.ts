@@ -22,3 +22,13 @@ export interface AuthContextType{
     login: (uuid:any,token:any) => void,
     logout: () => any,
 }
+
+export type ENDPOINTS = 'get' | 'put' | 'patch' | 'post' | 'delete'
+
+export interface LISTDATA {
+    title:string,
+    description:string
+}
+export interface ListFormProps {
+    edit?:boolean,editValue? : LISTDATA,submitHandler:(value:any)=>void
+}
