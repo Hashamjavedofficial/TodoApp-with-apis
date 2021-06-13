@@ -22,6 +22,9 @@
     "noImplicitThis": true,
     "strictNullChecks": true
   },
+  "paths": {
+    "@material-ui/core/*": ["typings/@material-ui/core/*"]
+  },
   "include": [
     "src"
   ]

@@ -1,27 +1,45 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment ,useContext} from "react";
 import { Grid, TextField, Button } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
 import Card from "@material-ui/core/Card";
 import { Formik, Field } from "formik";
+import axios from 'axios'
 
+import {AuthContext} from "../../context/Authentication";
+import {SnackBarContext} from "../../context/Snackbar";
 import { useLoginStyle } from "../../styles/Login.Styles";
 import Spinner from "../atoms/Spinner";
 import Logo from "../../logo.jpg";
 import loginImage from "../../assets/sport.jpg";
 
 const Login:React.FC = () => {
-    const history = useHistory();
-    // const auth = useContext(AuthContext);
+   const {login} = useContext(AuthContext)
+    const {notify} = useContext(SnackBarContext)
     const classes = useLoginStyle();
     const loginClasses = useLoginStyle();
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState<boolean>(false);
 
-    const submitHandler = (values:any, options:any) => {
+    const submitHandler =async (values:any) => {
+        setOpen(true)
+        try {
+            const response = await axios.post('http://localhost:5000/user/login',{
+                ...values
+            })
+            const {data} = response.data
+            setOpen(false)
+            login({
+                id:data._id,name:data.name,token:data.token
+            },data.token)
+            notify(response.data.message, 'success')
+        }catch (e) {
+            setOpen(false)
+            notify(e.response.data.message, 'error')
+        }
 
     };
     return (
         <Fragment>
-            <Spinner open={false} />
+            <Spinner open={open} />
             <div className={classes.main}>
                 <Grid container item className={classes.imageContainer}>
                     <img
@@ -52,7 +70,7 @@ const Login:React.FC = () => {
                                         email: "",
                                         password: "",
                                     }}
-                                    onSubmit={(values, options) => submitHandler(values, options)}
+                                    onSubmit={(values) => submitHandler(values)}
                                 >
                                     {({ values, handleSubmit, touched, errors }) => (
                                         <form onSubmit={handleSubmit} autoComplete="Off">
@@ -83,6 +101,7 @@ const Login:React.FC = () => {
                                                     <Grid container justify="space-between" spacing={2}>
                                                         <Grid item md={12} xs={12}>
                                                             <Button
+                                                                type={'submit'}
                                                                 variant="contained"
                                                                 color="primary"
                                                                 className="w-full"

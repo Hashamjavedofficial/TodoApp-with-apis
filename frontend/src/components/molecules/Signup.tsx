@@ -1,6 +1,6 @@
 import React, { useState, Fragment, useContext } from "react";
-import { Grid, TextField, Button } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { Grid, TextField,Button } from "@material-ui/core";
+
 import Card from "@material-ui/core/Card";
 import axios from 'axios'
 import { Formik, Field } from "formik";
@@ -16,13 +16,11 @@ import loginImage from "../../assets/sport.jpg";
 const Signup:React.FC = () => {
     const auth = useContext(AuthContext)
     const {notify} = useContext(SnackBarContext)
-    const history = useHistory();
-    // const auth = useContext(AuthContext);
     const classes = useLoginStyle();
-    const loginClasses = useLoginStyle();
+
     const [open, setOpen] = useState<boolean>(false);
 
-    const submitHandler =async (values:any, options:any) => {
+    const submitHandler =async (values:any) => {
         setOpen(true)
         try {
             const response = await axios.post('http://localhost:5000/user/',{
@@ -74,7 +72,7 @@ const Signup:React.FC = () => {
                                         email: "",
                                         password: "",
                                     }}
-                                    onSubmit={(values, options) => submitHandler(values, options)}
+                                    onSubmit={(values) => submitHandler(values)}
                                 >
                                     {({ values, handleSubmit, touched, errors }) => (
                                         <form onSubmit={handleSubmit} autoComplete="Off">
@@ -126,14 +124,14 @@ const Signup:React.FC = () => {
                                                 <Grid item>
                                                     <Grid container justify="space-between" spacing={2}>
                                                         <Grid item md={12} xs={12}>
-                                                            <button
+                                                            <Button
                                                                 type="submit"
-                                                                // variant="contained"
-                                                                // color="primary"
+                                                                variant="contained"
+                                                                color="primary"
                                                                 className="w-full"
                                                             >
                                                                 Sign Up
-                                                            </button>
+                                                            </Button>
                                                         </Grid>
                                                     </Grid>
                                                 </Grid>

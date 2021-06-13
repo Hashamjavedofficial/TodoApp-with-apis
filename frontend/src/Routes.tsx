@@ -16,8 +16,8 @@ const Routes:React.FC = () => {
     if (token) {
         routes = (
             <Fragment>
-                <Route path="/list" component={List} />
-                <Redirect to={"/list"} />
+                <Route path="/" component={List} />
+                <Redirect to={"/"} />
             </Fragment>
         );
     } else {
